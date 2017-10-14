@@ -1,0 +1,1 @@
+This is the repository for a project from third edition of [Learn IT Girl](https://www.learnitgirl.com/). I plan to write a simple roguelike game and learn C++. In this repository you will find both the project and exercises preparing me for the actual coding.
