@@ -1,5 +1,4 @@
 language: cpp
-# script: cons
 compiler:
   - clang
   - gcc
