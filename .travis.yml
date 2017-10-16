@@ -1,10 +1,31 @@
-language: cpp
-compiler: g++
+language: generic
+sudo: required
+dist: trusty
+
+matrix:
+  fast_finish: true
+
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages:
+            - g++-6
+      env: CCOMPILER='gcc-6' CXXCOMPILER='g++-6'
+
+    - os: linux
+      addons:
+        apt:
+          sources: ['llvm-toolchain-trusty-3.9']
+          packages:
+            - clang-3.9
+      env: CCOMPILER='clang-3.9' CXXCOMPILER='clang++-3.9'
+
 
 before_install:
-- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-- sudo apt-get update -qq
+  - export CC=${CCOMPILER} CXX=${CXXCOMPILER}
 
-install:
-- sudo apt-get install -qq g++-4.8
-- export CXX="g++-4.8"
+script:
+  - for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic *.cpp -o * ; done
+
