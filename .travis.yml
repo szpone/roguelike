@@ -10,14 +10,16 @@ matrix:
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
-          packages: 'g++-6'
+          packages:
+            - g++-6
       env: CCOMPILER='gcc-6' CXXCOMPILER='g++-6'
 
     - os: linux
       addons:
         apt:
           sources: ['llvm-toolchain-trusty-3.9']
-          packages: 'clang-3.9'
+          packages:
+            - clang-3.9
       env: CCOMPILER='clang-3.9' CXXCOMPILER='clang++-3.9'
 
 
