@@ -27,5 +27,5 @@ before_install:
   - export CC=${CCOMPILER} CXX=${CXXCOMPILER}
 
 script:
-  - for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic *.cpp -o * ; done
+  - for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic source -o * ; done
 
