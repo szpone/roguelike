@@ -26,5 +26,6 @@ matrix:
 before_install:
   - export CC=${CCOMPILER} CXX=${CXXCOMPILER}
 
-for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic *.cpp -o * ; done
+script:
+  - for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic *.cpp -o * ; done
 
