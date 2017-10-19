@@ -2,6 +2,32 @@ language: generic
 sudo: required
 dist: trusty
 
-script:
-- g++ hello.cpp -o travis_gcc_cpp14
-- ./travis_gcc_cpp14
+matrix:
+  fast_finish: true
+
+    include:
+    - os: linux
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['g++-6', 'cmake', 'python3', 'python3-pip', 'python3-setuptools', 'nodejs', 'npm', 'libsfml-dev', 'libprotobuf-dev', 'protobuf-compiler', 'libzmq-dev']
+      env: CCOMPILER='gcc-6' CXXCOMPILER='g++-6'
+
+    - os: linux
+      addons:
+        apt:
+          sources: ['llvm-toolchain-trusty-3.9']
+          packages: ['clang-3.9', 'cmake', 'python3', 'python3-pip', 'python3-setuptools', 'nodejs', 'npm', 'libsfml-dev', 'libprotobuf-dev', 'protobuf-compiler', 'libzmq-dev']
+      env: CCOMPILER='clang-3.9' CXXCOMPILER='clang++-3.9'
+
+before_install:
+  - export CC=${CCOMPILER} CXX=${CXXCOMPILER}
+
+for source in *.cpp; do $(CXX) -Wall -Wextra -pedantic app.cpp -o app ; done
+
+
+
+
+# script:
+# - g++ hello.cpp -o travis_gcc_cpp14
+# - ./travis_gcc_cpp14
