@@ -3,5 +3,5 @@ sudo: required
 dist: trusty
 
 script:
-- g++ hello.cpp -o -Wall -Wextra -pedantic travis_gcc_cpp14
+- g++ hello.cpp -o travis_gcc_cpp14
 - ./travis_gcc_cpp14
