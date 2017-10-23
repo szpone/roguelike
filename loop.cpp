@@ -4,7 +4,7 @@
 int main() {
   std::cout << "Enter your first name: ";
   std::string name;
-  if (std::cin >> name) { ok(); } else { error(); }
+  std::cin >> name
 
   const std::string greeting = "Hello " + name;
 
