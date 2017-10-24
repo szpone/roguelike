@@ -4,7 +4,7 @@
 int main() {
   std::cout << "Enter your first name: ";
   std::string name;
-  std::cin >> name
+  std::cin >> name;
 
   const std::string greeting = "Hello " + name;
 
