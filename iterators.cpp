@@ -1,18 +1,35 @@
-#include <iomanip>
-#include <ios>
+// #include <iomanip>
+// #include <ios>
+// #include <iostream>
+// #include <string>
+// #include <vector>
+
+
+// int main() {
+//     std::int number_one 1;
+//     std::int number_2 2;
+
+//     const std::vector numbers = numbers.push_back(number_one)
+
+//     std::cout << numbers << std::endl;
+
+
+//   return 0;
+// }
+
 #include <iostream>
-#include <string>
 #include <vector>
 
-
 int main() {
-    std::int number_one 1;
-    std::int number_2 2;
 
-    const std::vector numbers = numbers.push_back(number_one)
+    std::string dupa = "ioioio";
+    // std::vector wektor = wektor.push_back(dupa);
+    std::vector<string> word;
 
-    std::cout << numbers << std::endl;
+    word.push_back(dupa);
 
 
-  return 0;
+    std::cout << word << std::endl;
+
+    return 0;
 }
