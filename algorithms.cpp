@@ -24,16 +24,18 @@ int main() {
 }
 
 
-int filling() {
+int main() {
 
     std::vector<int> v(100);
 
     auto it = v.begin();
     auto end = v.end();
 
-    auto algo = std::iota(it, end, 0);
+    std::iota(it, end, 0);
 
-    std::cout << algo << std::endl;
+    for (auto each : v) {
+        std::cout << each << std::endl;
+    }
 
     return 0;
 
