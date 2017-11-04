@@ -4,7 +4,7 @@
 
 // reverse iteration
 
-int reverse_order() {
+void reverse_order() {
 
   std::vector<int> v = {1, 2, 3, 4};
   auto it = v.rbegin();
@@ -14,19 +14,17 @@ int reverse_order() {
     std::cout << *it << std::endl;
   }
 
-  return 0;
 }
 
 // iterators for string
 
-int wordy() {
+void wordy() {
   std::string s = "Ala ma kota";
 
   for (auto it = s.begin(); it != s.end(); it++) {
     std::cout << *it << std::endl;
   }
 
-  return 0;
 }
 
 // How do iterators describe ranges of items?
@@ -49,7 +47,7 @@ int wordy() {
 
 // How to iterate over
 
-int iterate_over() {
+void iterate_over() {
 
   std::vector<int> v = {1, 2, 3, 4, 5};
   auto start = v.begin();
@@ -59,5 +57,4 @@ int iterate_over() {
     std::cout << *start << std::endl;
   }
 
-  return 0;
 }
