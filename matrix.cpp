@@ -37,5 +37,5 @@ int Matrix::GetCoordinates(int x, int y) {
 }
 
 int Matrix::SetCoordinates(int x, int y, int val) {
-    data[x][y] = val;
+    return data[x][y] = val;
 }
