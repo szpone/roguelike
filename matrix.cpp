@@ -26,9 +26,8 @@ public:
 };
 
 Matrix::Matrix(int xdim, int ydim) {
-    data.push_back();
     for (int i=0; i < xdim; i++) {
-        vector<int> v(ydim);
+        std::vector<int> v(ydim);
         data.push_back(v);
     };
 };
