@@ -17,12 +17,15 @@
 // void set(int x, int y, int val) { data[x][y] = val;
 
 class Matrix {
-public:
+private:
     std::vector<std::vector<int>> data;
-    int xdim;
-    int ydim;
+
     int GetCoordinates(int x, int y);
     int SetCoordinates(int x, int y, int val);
+public:
+    int xdim;
+    int ydim;
+    Matrix(int xdim, int ydim);
 };
 
 Matrix::Matrix(int xdim, int ydim) {
