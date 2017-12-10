@@ -11,6 +11,7 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.vscode/settings.json
 
 # Compiled Dynamic libraries
 *.so
@@ -31,3 +32,10 @@
 *.exe
 *.out
 *.app
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
