@@ -5,7 +5,9 @@
 #include <vector>
 
 class Map;
+class Monster;
 void draw_map(Map &map);
+void draw_status(Monster &player);
 void find_initial_position(Map &map, int &x, int &y);
 void pick_monster_position(Map &map, int &x, int &y);
 
@@ -39,13 +41,28 @@ public:
 };
 
 class Monster {
-public:
-  char monster_char = '&';
+  public:
+  char character;
   int x, y;
   int hp;
-  int attack; 
+  int attack;
 
-  Monster(int x, int y): x(x), y(y) {
+  Monster(int x, int y, char character): x(x), y(y), hp(10), attack(4), character(character) {}
+
+  void brutal_attack(Monster &monster) { 
+    monster.hp -= attack;
+    if(monster.hp <= 0) {
+      monster.die();
+    } 
+  }
+
+  void die() {
+    x = -1;
+    y = -1;
+  }
+
+  bool isPlayer() {
+    return character == '@';
   }
 };
 
@@ -60,29 +77,37 @@ enum {
 
 class Game {
 public:
-  char main_char = '@';
   std::vector<Monster> monsters;
   Map &map;
-  int x, y;
 
-  Game(Map &map, int x, int y): map(map), x(x), y(y) {}
+  Game(Map &map, Monster &player): map(map) {
+    monsters.push_back(player);
+  }
+
+  Monster &getPlayer() {
+    return monsters[0];
+  }
 
   void generate_monsters() {
     for(int i = 0; i < 5; ++i) {
       int x, y;
       pick_monster_position(map, x, y);
-      monsters.push_back(Monster(x, y));
+      monsters.push_back(Monster(x, y, '&'));
     }
   }
 
   void draw_monsters() {
     for(Monster &monster: monsters) {
-      mvaddch(monster.y, monster.x, monster.monster_char);
+      mvaddch(monster.y, monster.x, monster.character);
     }
   }
 
   void move_monsters() {
     for(Monster &monster: monsters) {
+      if (monster.isPlayer()) {
+        continue;
+      }
+
       int direction = rand() % 4;
       if(direction == UP) {
         move_monster(monster, monster.x, monster.y - 1);
@@ -104,10 +129,16 @@ public:
     return false;
   }
 
-  void move_hero(int new_x, int new_y) {
+  void move_monster(Monster &monster, int new_x, int new_y) {
     if (check_position(new_x, new_y)) {
-      x = new_x;
-      y = new_y;
+      monster.x = new_x;
+      monster.y = new_y;
+    } else {
+      Monster *pMonster;
+      pMonster = find_monster(new_x, new_y);
+      if (pMonster) {
+        monster.brutal_attack(*pMonster);
+      }
     }
   }
 
@@ -120,21 +151,20 @@ public:
     return false;
   }
 
-  void move_monster(Monster &monster, int new_x, int new_y) {
-    if(check_position(new_x, new_y)) {
-      monster.x = new_x;
-      monster.y = new_y;
+  Monster *find_monster(int x, int y) {
+    for(Monster &monster : monsters) {
+      if(monster.x == x && monster.y == y) {
+        return &monster;
+      }
     }
-
+    return nullptr;
   }
 
   void game_loop(int ch) {
+    Monster &player = getPlayer();
 
     if (ch == 'q' || ch == 'Q')
       return;
-
-    mvaddch(y, x, main_char);
-    refresh();
 
     for (;;) {
       redraw();
@@ -142,17 +172,16 @@ public:
       ch = getch();
 
       if (ch == KEY_LEFT) {
-        move_hero(x - 1, y);
+        move_monster(player, player.x - 1, player.y);
 
       } else if (ch == KEY_RIGHT) {
-        move_hero(x + 1, y);
+        move_monster(player, player.x + 1, player.y);
 
       } else if (ch == KEY_UP) {
-        move_hero(x, y - 1);
-
+        move_monster(player, player.x, player.y - 1);
 
       } else if (ch == KEY_DOWN) {
-        move_hero(x, y + 1);
+        move_monster(player, player.x, player.y + 1);
       } else if (ch == 'q' || 'Q') {
         break;
       }
@@ -166,17 +195,10 @@ public:
     clear();
     draw_map(map);
     draw_monsters();
-    draw_player();
+    draw_status(getPlayer());
     refresh();
   }
-
-  void draw_player() {
-    mvaddch(y, x, main_char);
-  }
 };
-
-
-
 
 int main() {
   initscr();
@@ -196,7 +218,8 @@ int main() {
   Map map(width, height);
   int y, x;
   find_initial_position(map, x, y);
-  Game game(map, x, y);
+  Monster player(x, y, '@');
+  Game game(map, player);
   game.generate_monsters();
   game.game_loop(ch);
   endwin();
@@ -227,5 +250,9 @@ void draw_map(Map &map) {
       mvaddch(y, x, map.getChar(x, y));
     }
   }
+}
+
+void draw_status(Monster &player) {
+  mvprintw(0, 40, "HP: %d", player.hp);
 }
 
