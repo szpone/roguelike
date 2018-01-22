@@ -24,7 +24,6 @@ void wordy() {
   for (auto it = s.begin(); it != s.end(); it++) {
     std::cout << *it << std::endl;
   }
-
 }
 
 // How do iterators describe ranges of items?
